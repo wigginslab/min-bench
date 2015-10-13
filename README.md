@@ -12,3 +12,8 @@ Setup
 -----
 Run server:
 `python views/app.py`
+
+Todos
+-----
+* Create wiki for setup/instructions
+* Multi-tenancy
