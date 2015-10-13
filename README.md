@@ -10,3 +10,5 @@ products/research.
 
 Setup
 -----
+Run server:
+`python views/app.py`
