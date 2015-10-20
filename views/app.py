@@ -19,5 +19,5 @@ if __name__ == "__main__":
         (r"/", IndexHandler)
     ], **settings)
 
-    application.listen(3000)
+    application.listen(3036)
     tornado.ioloop.IOLoop.instance().start()
