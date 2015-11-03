@@ -41,6 +41,12 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
+              {% if not current_user %}
+              <li><a href="/auth/login" class="btn btn-success-outline">Login</a></li>
+              <li><a href="/auth/register" class="btn btn-warning-outline">Register</a></li>
+              {% else %}
+              <li><a href="/auth/logout" class="btn btn-success-outline">Logout</a></li>
+              {% end %}
               <li><a href="mailto:daniel.alabi@columbia.edu">Contact</a></li>
             </ul>
           </div><!-- /.navbar-collapse -->

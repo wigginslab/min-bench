@@ -1,24 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="login-form">
-  <form action="/auth/login/" method="post" id="login_form">
-    <fieldset>
-      <label for="username">Username</label>
-      <input autocapitalize="off" autocorrect="off" class="text-input" id="username" name="username" tabindex="1" type="text" value="">
-    </fieldset>
-
-    <fieldset>
-      <label for="password">Password</label>
-      <input class="text-input" id="password" name="password" tabindex="2" type="password" value="">
-    </fieldset>
-    <fieldset>
-      <span class="errormessage">{{errormessage}}</span>
-    </fieldset>
-    <div id="form_btn">
-      <input id="signin-btn" class="btn btn-blue" type="submit" value="Sign In" tabindex="3">
-      <!-- <a href="/sb/"><input id="inscription-btn" class="btn btn-red" value="Inscription" tabindex="3"></a> -->
+<!-- regular login -->
+<div class="signin">
+    <h2> Sign In </h2>
+    <div class="form-wrapper" ng-controller="LoginController">
+        <form method="post" action="/auth/login/" role="form simple-form" form-submit="submit()" name="login_form">
+            <div class="form-group">
+                <input name="email" type="email" class="form-control" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <input name="password" type="password" class="form-control" placeholder="Password">
+            </div>
+            <button type="submit" ng-click="submit()" class="btn btn-default">Submit</button>
+            <p>Need to <a href="/auth/register/">sign up</a>?</p>
+        </form>
     </div>
-  </form>
 </div>
 {% end %}
