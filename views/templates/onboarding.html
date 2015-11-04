@@ -3,10 +3,24 @@
 {% block content %}
 <!-- onboarding links -->
 <div class="onboarding">
-  <h1>Do onboarding to the following sites:</h1>
-  <ul>
-    <li>Site 1</li>
-    <li>Site 2</li>
-  </ul>
+  <h1>Welcome!</h1>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="col-md-2">
+        <div class="well sidebar-nav">
+          <ul class="nav nav-list">
+            <li class="nav-header"><a href="javascript:void(0);" onclick="javascript:introJs().start();">NYCRIN Interviews</a></li>
+            <li class="nav-header"><a href="javascript:void(0);" onclick="javascript:introJs().start();">Financials</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-10">
+        <ul class="nav">
+          <li data-step="1" data-intro="Hi! :) Tell me something about my NYCRIN interviews">Information about my interviews</li>
+          <li data-step="2" data-intro="Hi! :) Tell me more about the NYCRIN interviews">Record the interviews</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
 {% end %}

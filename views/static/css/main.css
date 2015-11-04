@@ -61,6 +61,10 @@
     padding: 0;
     border: 0; }
 
+.onboarding h1 {
+    padding-top: 50px;
+}
+
 #google-prof-submit {
   margin-top: 10px;
   margin-bottom: 10px; }
@@ -90,7 +94,6 @@ body {
   margin-top: 20px;
   margin-bottom: -90px;
   /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */ }
-
 
 /* Remove border and change up box shadow for more contrast */
 .navbar .container {
