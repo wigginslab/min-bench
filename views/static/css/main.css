@@ -114,6 +114,9 @@ body {
 .navbar .nav > li > a {
   color: #609288;
   padding: 15px 20px; }
+.navbar .nav > li > a.login-image {
+  padding: 5px;
+}
   .navbar .nav > li > a .active {
     color: #609288; }
 

@@ -3,7 +3,11 @@ import os
 DEBUG = True
 DIRNAME = os.path.dirname(__file__)
 STATIC_PATH = os.path.join(DIRNAME, "static")
+GAUTH_CLIENT_ID = "692990912471-c60j5rf40at2j1724smps1nfcvs7s96e.apps.googleusercontent.com"
+GAUTH_CLIENT_SECRET = "nfNkd4LFas9FLPoOnQgQ6f5A"
 TEMPLATE_PATH = os.path.join(DIRNAME, "templates")
+PORT = 3036
+HOST = "localhost"
 
 import logging
 import sys

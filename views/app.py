@@ -2,97 +2,52 @@
 
 import settings
 
-import tornado.escape
+from tornado.escape import json_encode, json_decode, url_escape
 import tornado.ioloop
-from tornado.web import RequestHandler, Application, asynchronous, authenticated
+from tornado.auth import GoogleOAuth2Mixin
+from tornado.gen import coroutine
+from tornado.web import RequestHandler, Application, authenticated
 
 class BaseHandler(RequestHandler):
     def get_current_user(self):
-        return self.get_secure_cookie("user")
+        user_json = self.get_secure_cookie("user")
+        if not user_json: return None
+        return tornado.escape.json_decode(user_json)
 
 class IndexHandler(BaseHandler):
     def get(self):
         if self.current_user:
-            self.redirect(u"/main/")
+            self.redirect(u"/main")
         else:
-            self.render("index.html", not_logged_in=True, title="Minimalistic Lean Workbench")
+            self.render("index.html", title="Minimalistic Lean Workbench")
 
 class OnboardingHandler(BaseHandler):
     @authenticated
     def get(self):
         self.render("onboarding.html", title="Minimalistic Lean Workbench")
 
-class AuthLoginHandler(BaseHandler):
+class AuthLoginHandler(BaseHandler, GoogleOAuth2Mixin):
+    @coroutine
     def get(self):
-        if self.current_user:
-            self.redirect(u"/main/")
+        redirect_uri="http://{0}:{1}/auth/login".format(settings.HOST,
+                                                        settings.PORT)
+
+        if self.get_argument("code", None):
+            user = yield self.get_authenticated_user(
+                redirect_uri=redirect_uri,
+                code=self.get_argument("code"))
+            self.set_secure_cookie("user", json_encode(user))
+            self.redirect("/main")
         else:
-            try:
-                errormessage = self.get_argument("error")
-            except:
-                errormessage = ""
-            self.render("login.html", errormessage = errormessage)
-
-    def check_permission(self, password, email):
-        # TODO: actually check DB
-        if email == "admin@gmail.com" and password == "admin":
-            return True
-        return False
-
-    def post(self):
-        email = self.get_argument("email", "")
-        password = self.get_argument("password", "")
-        auth = self.check_permission(password, email)
-        if auth:
-            self.set_current_user(email)
-            self.redirect(self.get_argument("next", u"/main/"))
-        else:
-            error_msg = u"?error=" + tornado.escape.url_escape("Login incorrect")
-            self.redirect(u"/auth/login/" + error_msg)
-
-    def set_current_user(self, user):
-        if user:
-            self.set_secure_cookie("user", tornado.escape.json_encode(user))
-        else:
-            self.clear_cookie("user")
-
-class AuthRegisterHandler(BaseHandler):
-
-    def get(self):
-        try:
-            errormessage = self.get_argument("error")
-        except:
-            errormessage = ""
-
-        if self.current_user:
-            self.redirect(u"/main/")
-        else:
-            self.render("register.html", errormessage = errormessage)
-
-    def check_permission(self, password, email):
-        if email == "admin@gmail.com" and password == "admin":
-            return True
-        return False
-
-    def post(self):
-        email = self.get_argument("email", "")
-        password = self.get_argument("password", "")
-        auth = self.check_permission(password, email)
-        if auth:
-            self.set_current_user(email)
-            self.redirect(self.get_argument("next", u"/"))
-        else:
-            error_msg = u"?error=" + tornado.escape.url_escape("Login incorrect")
-            self.redirect(u"/auth/login/" + error_msg)
-
-    def set_current_user(self, user):
-        if user:
-            self.set_secure_cookie("user", tornado.escape.json_encode(user))
-        else:
-            self.clear_cookie("user")
+            yield self.authorize_redirect(
+                redirect_uri=redirect_uri,
+                client_id=self.settings["google_oauth"]["key"],
+                scope=["profile", "email"],
+                response_type="code",
+                extra_params={"approval_prompt" : "auto"})
 
 class AuthLogoutHandler(BaseHandler):
-
+    @authenticated
     def get(self):
         self.clear_cookie("user")
         self.redirect(self.get_argument("next", "/"))
@@ -103,15 +58,16 @@ if __name__ == "__main__":
         "template_path" : settings.TEMPLATE_PATH,
         "login_url" : "/auth/login/",
         "debug": settings.DEBUG,
-        "cookie_secret": settings.COOKIE_SECRET
+        "cookie_secret": settings.COOKIE_SECRET,
+        "google_oauth" : { "key" : settings.GAUTH_CLIENT_ID,
+                           "secret" : settings.GAUTH_CLIENT_SECRET }
     }
     application = Application([
         (r"/", IndexHandler),
         (r"/auth/login/?", AuthLoginHandler),
         (r"/auth/logout/?", AuthLogoutHandler),
-        (r"/auth/register/?", AuthRegisterHandler),
         (r"/main/?", OnboardingHandler),
     ], **settings_dict)
 
-    application.listen(3036)
+    application.listen(settings.PORT)
     tornado.ioloop.IOLoop.instance().start()
