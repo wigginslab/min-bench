@@ -7,7 +7,6 @@ GAUTH_CLIENT_ID = "692990912471-c60j5rf40at2j1724smps1nfcvs7s96e.apps.googleuser
 GAUTH_CLIENT_SECRET = "nfNkd4LFas9FLPoOnQgQ6f5A"
 TEMPLATE_PATH = os.path.join(DIRNAME, "templates")
 PORT = 3036
-HOST = "localhost"
 
 import logging
 import sys

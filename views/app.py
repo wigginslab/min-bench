@@ -2,6 +2,7 @@
 
 import settings
 
+import socket
 from tornado.escape import json_encode, json_decode, url_escape
 import tornado.ioloop
 from tornado.auth import GoogleOAuth2Mixin
@@ -29,8 +30,7 @@ class OnboardingHandler(BaseHandler):
 class AuthLoginHandler(BaseHandler, GoogleOAuth2Mixin):
     @coroutine
     def get(self):
-        redirect_uri="http://{0}:{1}/auth/login".format(settings.HOST,
-                                                        settings.PORT)
+        redirect_uri="http://{0}/auth/login".format(self.request.host)
 
         if self.get_argument("code", None):
             user = yield self.get_authenticated_user(
