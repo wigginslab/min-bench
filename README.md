@@ -11,9 +11,8 @@ products/research.
 Setup
 -----
 Run server:
-`python views/app.py`
+`python app.py`
 
 Todos
 -----
 * Create wiki for setup/instructions
-* Multi-tenancy
