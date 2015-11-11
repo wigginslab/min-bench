@@ -1,7 +1,12 @@
 #!/usr/bin/env python
 
+"""
+Main server script.
+"""
+
 import settings
 
+import pymongo
 import socket
 from tornado.escape import json_encode, json_decode, url_escape
 import tornado.ioloop
@@ -37,6 +42,7 @@ class AuthLoginHandler(BaseHandler, GoogleOAuth2Mixin):
                 redirect_uri=redirect_uri,
                 code=self.get_argument("code"))
             self.set_secure_cookie("user", json_encode(user))
+
             self.redirect("/main")
         else:
             yield self.authorize_redirect(
