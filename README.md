@@ -10,8 +10,12 @@ products/research.
 
 Setup
 -----
-Run server:
-`python app.py`
+1. Make sure you have a MongoDB server running. For example, to start a standalone
+   MongoDB server, use `mongod --dbpath <database path>`.
+
+2. Next, install python requirements via `pip install -r requirements.txt`.
+
+3. Run the tornado server via `python app.py`
 
 Todos
 -----

@@ -6,7 +6,7 @@ Main server script.
 
 import settings
 
-import pymongo
+from pymongo import MongoClient
 import socket
 from tornado.escape import json_encode, json_decode, url_escape
 import tornado.ioloop
@@ -32,25 +32,35 @@ class OnboardingHandler(BaseHandler):
     def get(self):
         self.render("onboarding.html", title="Minimalistic Lean Workbench")
 
+# User authentication data:
+# "users" collection schema: name, email
 class AuthLoginHandler(BaseHandler, GoogleOAuth2Mixin):
     @coroutine
     def get(self):
         redirect_uri="http://{0}/auth/login".format(self.request.host)
 
-        if self.get_argument("code", None):
-            user = yield self.get_authenticated_user(
+        if self.get_argument('code', False):
+            access = yield self.get_authenticated_user(
                 redirect_uri=redirect_uri,
-                code=self.get_argument("code"))
+                code=self.get_argument('code'))
+            user = yield self.oauth2_request(
+                "https://www.googleapis.com/oauth2/v1/userinfo",
+                access_token=access["access_token"])
             self.set_secure_cookie("user", json_encode(user))
+
+            database = self.settings["database"]
+            if not database.users.find_one({ "_id" : user["email"] }):
+                database.users.insert_one({ "_id" : user["email"],
+                                            "name" : user["name"] })
 
             self.redirect("/main")
         else:
             yield self.authorize_redirect(
                 redirect_uri=redirect_uri,
                 client_id=self.settings["google_oauth"]["key"],
-                scope=["profile", "email"],
-                response_type="code",
-                extra_params={"approval_prompt" : "auto"})
+                scope=['profile', 'email'],
+                response_type='code',
+                extra_params={'approval_prompt': 'auto'})
 
 class AuthLogoutHandler(BaseHandler):
     @authenticated
@@ -59,6 +69,9 @@ class AuthLogoutHandler(BaseHandler):
         self.redirect(self.get_argument("next", "/"))
 
 if __name__ == "__main__":
+    client = MongoClient()
+    database = client.min_bench
+
     settings_dict = {
         "static_path" : settings.STATIC_PATH,
         "template_path" : settings.TEMPLATE_PATH,
@@ -66,7 +79,8 @@ if __name__ == "__main__":
         "debug": settings.DEBUG,
         "cookie_secret": settings.COOKIE_SECRET,
         "google_oauth" : { "key" : settings.GAUTH_CLIENT_ID,
-                           "secret" : settings.GAUTH_CLIENT_SECRET }
+                           "secret" : settings.GAUTH_CLIENT_SECRET },
+        "database" : database
     }
     application = Application([
         (r"/", IndexHandler),
