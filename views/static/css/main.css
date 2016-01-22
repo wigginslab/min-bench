@@ -660,3 +660,7 @@ form .btn {
 
 #linkedin-button {
   height: 50px; }
+
+legend {
+    padding-top: 20px;
+}

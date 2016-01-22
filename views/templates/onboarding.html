@@ -5,12 +5,19 @@
 <div class="onboarding">
   <div class="container">
     <div class="col-md-12" id="content">
+      {% if len(messages) > 0 %}
+      <div class="alert alert-success" role="alert">
+        <ul>
+          {% for message in messages %}
+          <li><strong>Well done!</strong>{{ message }}</li>
+          {% end %}
+        </ul>
+      </div>
+      {% end %}
       <div class="jumbotron">
         <h1>Innovation Accounting</h1>
         <p class="lead">
-          The Lean methodology defines its own accounting -- Innovation Accounting -- with separate
-          analyses appropriate to different points in the life-cycle of a business hypothesis:
-          baseline quanitifcation, optimization, and pivoting.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </p>
         <p>
           <a class="btn btn-lg btn-success" href="javascript:void(0);"
@@ -21,18 +28,18 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <h2>Virality Engine</h2>
-          <p data-step="1" data-intro="Find out who is talking about your product and why. The key performance indicator is <u>viral coefficient</u>, the number of users each user brings on.">
-            Connect to Facebook and Twitter
+          <h2>Website Creator Engine</h2>
+          <p data-step="1" data-intro="Create at <b>least</b> one website using LeanWorkbench">
+            Create websites you can manage using LeanWorkbench 
           </p>
-          <a class="btn btn-lg btn-primary" href="javascript:void(0);" role="button">Setup!</a>
+          <a class="btn btn-lg btn-primary" href="/websitecreator" role="button">Setup!</a>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
-          <h2>Google Analytics</h2>
+          <h2>Website Analytics</h2>
           <p data-step="2" data-intro="Track referral analytics and what not!">
-            Connect to Google Analytics Platform!
+            Track web traffic to your websites
           </p>
           <a class="btn btn-lg btn-primary" href="javascript:void(0);" role="button">Setup!</a>
         </div>
