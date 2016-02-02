@@ -664,3 +664,9 @@ form .btn {
 legend {
     padding-top: 20px;
 }
+
+#learn-more-button {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}

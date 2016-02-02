@@ -35,6 +35,10 @@ class OnboardingHandler(BaseHandler):
                     messages=self.settings["messages"])
         self.settings["messages"] = []
 
+class LearnMoreHandler(BaseHandler):
+    def get(self):
+        self.render("learnmore.html", title="Learn more about LeanWorkbench")
+
 class WebsiteCreatorHandler(BaseHandler):
     @authenticated
     def get(self):
@@ -116,6 +120,7 @@ if __name__ == "__main__":
         (r"/auth/logout/?", AuthLogoutHandler),
         (r"/main/?", OnboardingHandler),
         (r"/websitecreator/?", WebsiteCreatorHandler),
+        (r"/learn/?", LearnMoreHandler),
     ], **settings_dict)
 
     application.listen(settings.PORT)
