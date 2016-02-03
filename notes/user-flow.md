@@ -6,7 +6,7 @@ build-measure-learn feedback loop as fast as possible.
 
 Pages
 -----
-1. Root Page.
+1. Root Page: login, email, or learn
 2. Onboarding Page.
 3. Website Creator Page.
 4. "Learn More" Page.
@@ -22,7 +22,8 @@ This should be root page at http://leanworkbench.com.
     * Contact Us ->
         * [mailto: email]
     * Learn More ->
-        * "Learn More" Page
+        * "Learn More" Page (currently lorem ipsum)
+        * ./min-bench/views/templates/learnmore.html
 
 ### Onboarding Page
 This page should help:
@@ -33,10 +34,14 @@ This page should help:
 2. **Recurrent Users:** See/modify/analyze already set-up services
 
 * Onboarding Page ->
+
+  2 blocks:
+
    * Get Started Today ->
        * [Produce overlay that shows users how to set-up services]
    * Learn More ->
        * "Learn More" Page
+
    * Website Creator Engine ->
        * Website Creator Engine Page
    * Website Analytics ->
@@ -55,3 +60,9 @@ This page should cover:
 * The Build-Measure-Learn feedback loop
 * Metrics that Matter
 * OMTM (One Metric that Matters)
+
+# TTD/backlog
+- features being rebuilt
+  + mentor matcher
+  + vc matcher
+- features to be created
