@@ -17,6 +17,8 @@ Setup
 
 3. Run the tornado server via `python app.py`
 
+4. open http://localhost:3036/
+
 Todos
 -----
 * Create wiki for setup/instructions
