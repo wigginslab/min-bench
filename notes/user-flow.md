@@ -26,8 +26,10 @@ This should be root page at http://leanworkbench.com.
 
 ### Onboarding Page
 This page should help:
+
 1. **First time Users:** Set/Sign up for LeanWorkbench services
 (for example, the website creator)
+
 2. **Recurrent Users:** See/modify/analyze already set-up services
 
 * Onboarding Page ->
