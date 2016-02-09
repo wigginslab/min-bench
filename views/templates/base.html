@@ -55,8 +55,19 @@
             </ul>
           </div><!-- /.navbar-collapse -->
         </nav>
-      
+
         <div ng-view style="margin-top: 50px;">
+          <div class="col-md-12">
+            {% if len(messages) > 0 %}
+            <div class="alert alert-success" role="alert">
+              <ul>
+                {% for message in messages %}
+                <li><strong>Well done!</strong>{{ message }}</li>
+                {% end %}
+              </ul>
+            </div>
+            {% end %}
+          </div>
           {% block content %}{% end %}
         </div>
 

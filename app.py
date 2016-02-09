@@ -20,10 +20,14 @@ class BaseHandler(RequestHandler):
         if not user_json: return None
         return tornado.escape.json_decode(user_json)
 
+    def render(self, template_loc, **kwargs):
+        kwargs["messages"] = self.settings["messages"]
+        super(BaseHandler, self).render(template_loc, **kwargs)
+
 class IndexHandler(BaseHandler):
     def get(self):
         if self.current_user:
-            self.redirect(u"/main")
+            self.redirect("/main")
         else:
             self.render("index.html", title="Minimalistic Lean Workbench")
 
@@ -31,8 +35,7 @@ class OnboardingHandler(BaseHandler):
     @authenticated
     def get(self):
         self.render("onboarding.html",
-                    title="Minimalistic Lean Workbench",
-                    messages=self.settings["messages"])
+                    title="Minimalistic Lean Workbench")
         self.settings["messages"] = []
 
 class LearnMoreHandler(BaseHandler):
@@ -42,7 +45,8 @@ class LearnMoreHandler(BaseHandler):
 class WebsiteCreatorHandler(BaseHandler):
     @authenticated
     def get(self):
-        self.render("websitecreator.html", title="Create a website through LeanWorkbench")
+        self.render("websitecreator.html",
+                    title="Create a website through LeanWorkbench")
 
     def post(self):
         # TODO: validation for all arguments
@@ -58,10 +62,15 @@ class WebsiteCreatorHandler(BaseHandler):
 
         # caching
         self.settings["messages"].append(
-            "Created wesite '{0}'".format(company_name)
+            "Modified wesite '{0}'".format(company_name)
         )
 
-        self.redirect("/main")
+        self.redirect("/websiteeditor")
+
+class WebsiteEditorHandler(BaseHandler):
+    @authenticated
+    def get(self):
+        self.render("websiteeditor.html", title="Use website editor")
 
 # User authentication data:
 # "users" collection schema: name, email
@@ -120,6 +129,7 @@ if __name__ == "__main__":
         (r"/auth/logout/?", AuthLogoutHandler),
         (r"/main/?", OnboardingHandler),
         (r"/websitecreator/?", WebsiteCreatorHandler),
+        (r"/websiteeditor/?", WebsiteEditorHandler),
         (r"/learn/?", LearnMoreHandler),
     ], **settings_dict)
 
