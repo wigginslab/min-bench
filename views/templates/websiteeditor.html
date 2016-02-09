@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+  <div class="col-md-12">
+    <form method="post">
+      <textarea id="mytextarea">
+        <h1>Website name with some image</h1>
+        <h2>Add some more stuff that looks good?</h2>
+        <p>Some lorem ipsum perhaps</p>
+      </textarea>
+
+      <!-- Button -->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="submitbutton"></label>
+        <div class="col-md-4">
+          <input type="submit" class="btn btn-success" value="Submit"/>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script src='https://cdn.tinymce.com/4/tinymce.min.js'></script>
+<script>
+  tinymce.init({
+    selector: '#mytextarea'
+  });
+</script>
+{% end %}
