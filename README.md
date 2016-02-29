@@ -11,7 +11,7 @@ products/research.
 Setup
 -----
 1. Make sure you have a MongoDB server running. For example, to start a standalone
-   MongoDB server, use `mongod --dbpath <database path>`.
+   MongoDB server, use `mongod --dbpath <database path>`. if you want to use the default path, first `mkdir -p /data/db`, set permissions, then `mongod`.
 
 2. Next, install python requirements via `pip install -r requirements.txt`.
 
