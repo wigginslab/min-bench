@@ -65,6 +65,7 @@ class WebsiteCreatorHandler(BaseHandler):
             "Modified wesite '{0}'".format(company_name)
         )
 
+        # TODO: redirect to already created website
         self.redirect("/websiteeditor")
 
 class WebsiteEditorHandler(BaseHandler):
