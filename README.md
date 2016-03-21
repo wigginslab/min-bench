@@ -21,4 +21,4 @@ Setup
 
 Todos
 -----
-* Create wiki for setup/instructions
+* Create simple websites based on information entered by user
