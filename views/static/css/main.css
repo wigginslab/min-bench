@@ -674,3 +674,7 @@ legend {
 .onboarding .jumbotron {
     padding: 80px;
 }
+
+.small-text {
+    font-size: 10px;
+}
