@@ -11,10 +11,6 @@
 Welcome to the Lean WorkBench (LWB)! LWB is an NSF-supported tool for founders, balancing operational and pedagogical tools. LWB will introduce you to tools to falsify hypotheses about your product-market fit and to optimize growth of your new startup.
         </p>
         <p>
-          <!--<a class="btn btn-lg btn-success" href="javascript:void(0);"
-             onclick="javascript:introJs().start();">
-            Get started today
-          </a>-->
           <a id="learn-more"
              class="btn btn-lg pull-right btn-success" href="/learn">
              Learn More
@@ -22,38 +18,90 @@ Welcome to the Lean WorkBench (LWB)! LWB is an NSF-supported tool for founders, 
         </p>
       </div>
       <div class="row">
-        <div class="col-md-12">
-          <h2>Website Creation and Analytics</h2>
-          <p data-step="2" data-intro="Track referral analytics, user funnel transitions, and engagement and growth">
-            <p>You can use any of the following sites to create and analyze your startup sites:
-            <ul>
-              <li><a href="https://www.launchrock.com/">LaunchRock</a>:
-                Highly recommended for its ease-of-use.
-              </li>
-              <li><a href="http://launcheffectapp.com/">Launch Effect (Wordpress Theme)</a></li>
-              <li><a href="http://unbounce">Unbounce</a></li>
-              <li><a href="http://www.kickofflabs.com/">KickoffLabs</a></li>
-              <li><a href="http://my.betali.st/">My Beta List</a></li>
-              <li><a href="http://www.prefinery.com">Prefinery</a></li>
-              <li><a href="http://launch.deskgator.com">LaunchGator</a></li>
-              <li><a href="http://quickmvp.com">QuickMVP</a></li>
-              <li><a href="http://prelauncher.info">Prelauncher</a></li>
-            </ul>
-            </p>
-          </p>
-          <!-- <a class="btn btn-lg btn-primary" href="javascript:void(0);" role="button">View/Analyze Traffic!</a> -->
+        <h2>Website Creation and Analytics</h2>
+        <p>You can use any of the following sites to create/launch websites for your startup:</p>
+        <div class="panel-group" id="accordion">
+	      <div class="panel panel-default">
+		    <div class="panel-heading">
+			  <h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">LaunchRock: Most Recommended! <a href="https://www.launchrock.com/">[Visit]</a></a>
+			  </h4>
+		    </div>
+		    <div id="collapseOne" class="panel-collapse collapse in">
+			  <div class="panel-body">
+                LaunchRock is a free, web based application that helps you set up a social “launching soon” page in minutes,
+                share your page and start gathering emails.
+                <ul>
+                  <li>LaunchRock pages help incentivize and reward users for telling others about your project through email &
+                their social networks via our built-in sharing tools.</li>
+                  <li>LaunchRock helps you understand your potential customers and allows you to see useful information on user signups, site traffic, and demographics through the admin “Insights” tab.</li>
+                  <li>LaunchRock helps you begin building a relationship with the customers you acquire through email.</li>
+                </ul>
+                <a href="https://www.quora.com/Whats-LaunchRock-all-about"><small>Source</small></a>                 
+			  </div>
+		    </div>
+	      </div>
+	      <div class="panel panel-default">
+		    <div class="panel-heading">
+			  <h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Launch Effect (Wordpress Theme)<a href="http://launcheffectapp.com/">[Visit]</a></a>
+			  </h4>
+		    </div>
+		    <div id="collapseTwo" class="panel-collapse collapse">
+			  <div class="panel-body">
+                Launch Effect (Wordpress Theme)
+			  </div>
+		    </div>
+	      </div>
+	      <div class="panel panel-default">
+	        <div class="panel-heading">
+			  <h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Unbounce<a href="http://unbounce">[Visit]</a></a>
+			  </h4>
+		    </div>
+		    <div id="collapseThree" class="panel-collapse collapse">
+			  <div class="panel-body">
+                Unbounce
+			  </div>
+		    </div>
+	      </div>
+          <div class="panel panel-default">
+	        <div class="panel-heading">
+			  <h4 class="panel-title">
+			    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">KickoffLabs<a href="http://www.kickofflabs.com/">[Visit]</a></a>
+			  </h4>
+		    </div>
+		    <div id="collapseThree" class="panel-collapse collapse">
+			  <div class="panel-body">
+                KickoffLabs
+			  </div>
+		    </div>
+	      </div>
+          <div class="panel panel-default">
+	        <div class="panel-heading">
+		      <h4 class="panel-title">
+			    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">QuickMVP<a href="http://quickmvp.com">[Visit]</a></a>
+		      </h4>
+		    </div>
+		    <div id="collapseThree" class="panel-collapse collapse">
+		      <div class="panel-body">
+                QuickMVP
+		      </div>
+		    </div>
+	      </div>
         </div>
-        <div class="col-md-12">
-          <h2>Mentor Matcher</h2>
-          <p data-step="3" data-intro="We can help you identify mentors">
-            We can help you find great mentors in your city!
-          </p>
-          <a class="btn btn-lg btn-primary" href="javascript:void(0);" role="button">Find Mentors!</a>
-        </div>
-
       </div>
-
     </div>
+
+    <div class="col-md-12">
+      <h2>Mentor Matcher</h2>
+      <p>
+        We can help you find great mentors in your city!
+      </p>
+      <a class="btn btn-lg btn-primary" href="javascript:void(0);" role="button">Find Mentors!</a>
+    </div>
+
   </div>
 </div>
+
 {% end %}
