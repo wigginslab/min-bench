@@ -21,17 +21,5 @@ Setup
 
 Todos
 -----
-* Create simple websites based on information entered by user
-
-Notes
------
-Sites to help launch startup:
-* LaunchRock - http://launchrock.com
-* Unbounce - http://unbounce.com
-* Kickofflabs - http://www.kickofflabs.com/
-* My Beta List - http://my.betali.st/
-* Launch Effect (WordPress theme) - http://launcheffectapp.com/
-* Prefinery - http://www.prefinery.com/
-* LaunchGator - http://launch.deskgator.com/
-* QuickMVP - http://quickmvp.com
-* Prelauncher - http://prelauncher.info
+* Get `Mentor Matcher` to work
+* Get `VC Matcher` to work
