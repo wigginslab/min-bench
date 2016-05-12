@@ -58,12 +58,12 @@ def update_user_with_email_id(self, user_email, user_data):
     database = self.settings["database"]
     result = database.users.update_one({
         "_id": user_email },
-        {"$set": user_data }, upsert=True)
+        {"$set": user_data })
 
     return result
 
 def update_successful(update_result):
-    if update_result.raw_result['ok'] == 1:
+    if update_result.raw_result['updatedExisting'] == True:
         return True
 
     return False
