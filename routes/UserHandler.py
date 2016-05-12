@@ -2,8 +2,17 @@ from routes.BaseHandler import BaseHandler
 from tornado.web import authenticated
 from tornado.escape import json_decode
 
-# TODO more descriptive name
 class UserHandler(BaseHandler):
+
+    # TODO should we eventually make a user model?
+    USER_MODEL_KEYS = [
+        "_id",
+        "name",
+        "startup_name",
+        "startup_tag_line",
+        "startup_tags"
+    ]
+
     #@authenticated
     def post(self):
         req_body = get_req_body(self)
@@ -16,7 +25,7 @@ class UserHandler(BaseHandler):
             if update_successful(update_result):
                 self.set_status(200)
             else:
-                return_error_message(self, 500, "Error: Updatefor user with email {0} failed ".format(user_id))
+                return_error_message(self, 500, "Error: Update for user with email {0} failed ".format(user_id))
         else:
             return_error_message(self, 404, "Error: Could not find user with email {0}".format(user_id))
 
@@ -26,16 +35,19 @@ def get_req_body(self):
     req_body = json_decode(req_json_body)
     return req_body
 
-# TODO rename to filter
 def build_user_dto(user_data):
-    user_DTO = {}
-    user_model_keys = ["name", "_id"]
+    user_dto = filter_req_data_for_user_data(user_data)
+    #TODO Do we want to do any validation here?
+    return user_dto
 
-    for key in user_data.keys():
-        if key in user_model_keys:
-            user_DTO[key] = user_data[key]
+def filter_req_data_for_user_data(req_data):
+    user_dto = {}
 
-    return user_DTO
+    for key in req_data.keys():
+        if key in UserHandler.USER_MODEL_KEYS:
+            user_dto[key] = req_data[key]
+
+    return user_dto
 
 def retrieve_user_with_email_id(self, user_email):
     database = self.settings["database"]
