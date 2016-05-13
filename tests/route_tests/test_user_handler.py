@@ -1,6 +1,8 @@
 import unittest2 as unittest
+from routes.BaseHandler import *
 from routes.UserHandler import *
-from routes.BaseHandler import BaseHandler
+
+
 from pymongo import MongoClient
 import settings
 
@@ -13,14 +15,14 @@ class TestUserHandler(unittest.TestCase):
         self.valid_user_email = "test@gmail.com"
         self.non_existent_user_email = "not_a_user@gmail.com"
 
-        createTestUser(self, "test@gmail.com", "testy")
+        self.create_test_user("test@gmail.com", "testy")
 
     def test_user_exists(self):
-        user = retrieve_user(self, self.valid_user_email)
+        user = self.retrieve_user(self.valid_user_email)
         self.assertIsNotNone(user)
 
     def test_user_does_not_exist(self):
-        user = retrieve_user(self, self.non_existent_user_email)
+        user = self.retrieve_user(self.non_existent_user_email)
         self.assertIsNone(user)
 
     def test_valid_user_can_update(self):
@@ -44,20 +46,19 @@ class TestUserHandler(unittest.TestCase):
         self.assertIs(update_successful(update_result), False)
 
     def tearDown(self):
-        destroyTestUser(self, "test@gmail.com")
+        self.destroy_test_user("test@gmail.com")
 
-## Testing Utility Functions
-def createTestUser(self, email, name):
-    database = self.settings["database"]
-    database.users.insert_one({ "_id" : email, "name" : name })
+    def create_test_user(self, email, name):
+        database = self.settings["database"]
+        database.users.insert_one({ "_id" : email, "name" : name })
 
-def destroyTestUser(self, email):
-    database = self.settings["database"]
-    database.users.delete_one({ "_id" : email})
+    def destroy_test_user(self, email):
+        database = self.settings["database"]
+        database.users.delete_one({ "_id" : email})
 
-def retrieve_user(self, name):
-    test_user = retrieve_user_with_email_id(self, name)
-    return test_user
+    def retrieve_user(self, name):
+        test_user = retrieve_user_with_email_id(self, name)
+        return test_user
 
 if __name__ == "__main__":
     unittest.main()
