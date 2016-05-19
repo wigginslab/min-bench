@@ -7,11 +7,9 @@ Main server script.
 import settings
 
 ## Import Mongodb packages
-# TODO remove
-#from pymongo import MongoClient
+from pymongo import MongoClient
 import socket
-from motor import MotorClient
-import motorengine
+from mongoengine import *
 
 ## Import Tornado packages
 from tornado.escape import json_encode, json_decode, url_escape
@@ -32,8 +30,9 @@ from routes.UserHandler import UserHandler
 
 ## Main Configs
 if __name__ == "__main__":
-    client = MotorClient()
+    client = MongoClient()
     database = client.min_bench
+    connect("min-bench")
 
     settings_dict = {
         "static_path" : settings.STATIC_PATH,
@@ -43,7 +42,6 @@ if __name__ == "__main__":
         "cookie_secret": settings.COOKIE_SECRET,
         "google_oauth" : { "key" : settings.GAUTH_CLIENT_ID,
                            "secret" : settings.GAUTH_CLIENT_SECRET },
-        # TODO might need to remove this
         "database" : database,
         "messages" : []
     }
@@ -60,5 +58,4 @@ if __name__ == "__main__":
     ], **settings_dict)
 
     application.listen(settings.PORT)
-    io_loop = tornado.ioloop.IOLoop.instance()
-    motorengine.connection.connect("min_bench", host="localhost", port=27017, io_loop=io_loop)
+    io_loop = tornado.ioloop.IOLoop.instance().start()
