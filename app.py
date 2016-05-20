@@ -52,7 +52,7 @@ if __name__ == "__main__":
         (r"/auth/logout/?", AuthLogoutHandler),
         (r"/learn/?", LearnMoreHandler),
         (r"/main/?", OnboardingHandler),
-        (r"/user/?", UserHandler),
+        (r"/edit/?", UserHandler),
         (r"/websitecreator/?", WebsiteCreatorHandler),
         (r"/websiteeditor/?", WebsiteEditorHandler)
     ], **settings_dict)
