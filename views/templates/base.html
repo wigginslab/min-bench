@@ -88,7 +88,7 @@
 		  document.createElement('ng-include');
 		  document.createElement('ng-pluralize');
 		  document.createElement('ng-view');
-          
+
 		  // Optionally these for CSS
 		  document.createElement('ng:include');
 		  document.createElement('ng:pluralize');
@@ -99,6 +99,6 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- put in another page? -->
     <script src="//cdn.jsdelivr.net/intro.js/1.1.1/intro.min.js"></script>
-
+    {% block scripts %}{% end %}
   </body>
 </html>
