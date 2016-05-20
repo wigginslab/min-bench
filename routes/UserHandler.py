@@ -1,73 +1,86 @@
-from routes.BaseHandler import BaseHandler
 from tornado.web import authenticated
 from tornado.escape import json_decode
+from tornado.gen import coroutine
+
+from routes.BaseHandler import BaseHandler
+from models.User import *
+from models.UserForm import *
 
 class UserHandler(BaseHandler):
+    @authenticated
+    @coroutine
+    def get(self):
+        current_user = self.get_current_user()
+        user_id = current_user['email']
+        user = yield self.retrieve_user_with_email_id(user_id)
 
-    # TODO should we eventually make a user model?
-    USER_MODEL_KEYS = [
-        "_id",
-        "name",
-        "startup_name",
-        "startup_tag_line",
-        "startup_tags"
-    ]
+        self.render("accountsetup.html", title="Edit Account Information", user=user)
 
-    #@authenticated
+    @authenticated
+    @coroutine
     def post(self):
-        req_body = get_req_body(self)
-        req_user_data = build_user_dto(req_body)
-        user_id = req_user_data['_id']
-        user = retrieve_user_with_email_id(self, user_id)
+        form_data = self.sanitize_request_form_data(self.request.arguments)
+        form = UserForm(data=form_data)
+        form_data_is_valid = form.validate()
 
-        if user:
-            update_result = update_user_with_email_id(self, user_id, req_user_data)
-            if update_successful(update_result):
-                self.set_status(200)
-            else:
-                return_error_message(self, 500, "Error: Update for user with email {0} failed ".format(user_id))
-        else:
-            return_error_message(self, 404, "Error: Could not find user with email {0}".format(user_id))
+        if not form_data_is_valid:
+            self.return_error_message(400, form.errors)
+            return
 
+        current_user = self.get_current_user()
+        user_id = current_user['email']
+        user = yield self.retrieve_user_with_email_id(user_id)
 
-def get_req_body(self):
-    req_json_body = self.request.body
-    req_body = json_decode(req_json_body)
-    return req_body
+        if user is None:
+            self.return_error_message(404, "Error: Could not find user with email {0}".format(user_id))
+            return
 
-def build_user_dto(user_data):
-    user_dto = filter_req_data_for_user_data(user_data)
-    #TODO Do we want to do any validation here?
-    return user_dto
+        updated_user = yield self.update_user(user, form_data)
 
-def filter_req_data_for_user_data(req_data):
-    user_dto = {}
+        if updated_user is None:
+            self.return_error_message(500, "Error: Update for user with email {0} failed ".format(user_id))
+            return
 
-    for key in req_data.keys():
-        if key in UserHandler.USER_MODEL_KEYS:
-            user_dto[key] = req_data[key]
+        self.set_status(200)
 
-    return user_dto
+    def sanitize_request_form_data(self, form_data):
+        if form_data is None:
+            return {}
 
-def retrieve_user_with_email_id(self, user_email):
-    database = self.settings["database"]
-    user_json_data = database.users.find_one({ "_id" : user_email })
-    return user_json_data
+        sanitized_form_data = self.filter_dic_for_first_item(form_data)
+        return sanitized_form_data
 
-def update_user_with_email_id(self, user_email, user_data):
-    database = self.settings["database"]
-    result = database.users.update_one({
-        "_id": user_email },
-        {"$set": user_data })
+    def filter_dic_for_first_item(self, dic):
+        new_dic = {}
+        try:
+            for k,v in dic.items():
+                new_dic[k] = v[0]
+        except:
+            return {}
 
-    return result
+        return new_dic
 
-def update_successful(update_result):
-    if update_result.raw_result['updatedExisting'] == True:
-        return True
+    @coroutine
+    def update_user(self, user, user_data):
+        if user == None:
+            return None
 
-    return False
+        try:
+            for k,v in user_data.items():
+                user[k] = v
+        except:
+            return None
 
-def return_error_message(self, status_code, message):
-    self.set_status(status_code)
-    self.write(message)
+        user['onboarding_complete'] = True
+
+        try:
+            user.save()
+        except:
+            return None
+
+        return user
+
+    def return_error_message(self, status_code, message):
+        self.set_status(status_code)
+        self.write(message)
+        self.finish()
