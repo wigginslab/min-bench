@@ -13,7 +13,6 @@ class BaseHandler(RequestHandler):
         return tornado.escape.json_decode(user_json)
 
     def render(self, template_loc, **kwargs):
-        kwargs["messages"] = self.settings["messages"]
         super(BaseHandler, self).render(template_loc, **kwargs)####
 
     @coroutine
