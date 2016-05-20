@@ -1,64 +1,90 @@
 import unittest2 as unittest
 from routes.BaseHandler import *
 from routes.UserHandler import *
+from models.User import *
+from tornado.gen import coroutine
+from tornado.testing import *
+from mongoengine import *
 
-
-from pymongo import MongoClient
-import settings
-
-class TestUserHandler(unittest.TestCase):
+class TestUserHandler(AsyncTestCase):
+    @coroutine
     def setUp(self):
-        client = MongoClient()
-        database = client.min_bench
+        super(AsyncTestCase, self).setUp()
+        self.io_loop = self.get_new_ioloop()
+        self.io_loop.make_current()
+        connect("min-bench")
 
-        self.settings = {"database": database }
-        self.valid_user_email = "test@gmail.com"
+        self.valid_user_email = "test@test.com"
         self.non_existent_user_email = "not_a_user@gmail.com"
+        yield self.create_test_user()
 
-        self.create_test_user("test@gmail.com", "testy")
-
+    @gen_test
     def test_user_exists(self):
-        user = self.retrieve_user(self.valid_user_email)
-        self.assertIsNotNone(user)
+        user = yield self.retrieve_user(self.valid_user_email)
+        self.assertTrue(user)
 
+    @gen_test
     def test_user_does_not_exist(self):
-        user = self.retrieve_user(self.non_existent_user_email)
+        user = yield self.retrieve_user(self.non_existent_user_email)
+        self.assertFalse(user)
+
+    @gen_test
+    def test_valid_user_can_update(self):
+        test_user = yield self.retrieve_user(self.valid_user_email)
+        new_user_data = {"_id": "test@test.com", "name": "new_test_name"}
+        user = yield self.update_user(test_user, new_user_data)
+        self.assertIs(user.name, "new_test_name")
+
+    @gen_test
+    def test_user_update_is_invalid(self):
+        test_user = yield self.retrieve_user(self.valid_user_email)
+        new_user_data = {"_id": "test@test.com", "name": 111}
+        user = yield self.update_user(test_user, new_user_data)
         self.assertIsNone(user)
 
-    def test_valid_user_can_update(self):
-        self.test_user_exists()
-
-        new_user_data = {"name": "dan"}
-        new_user_data_dto = build_user_dto(new_user_data)
-        self.assertIsNotNone(new_user_data_dto)
-
-        update_result = update_user_with_email_id(self, "test@gmail.com", new_user_data_dto)
-        self.assertIs(update_successful(update_result), True)
-
+    @gen_test
     def test_non_existent_user_cannot_update(self):
-        self.test_user_does_not_exist()
-
-        new_user_data = {"name": "dan"}
-        new_user_data_dto = build_user_dto(new_user_data)
-        self.assertIsNotNone(new_user_data_dto)
-
-        update_result = update_user_with_email_id(self, "not_a_user@gmail.com", new_user_data_dto)
-        self.assertIs(update_successful(update_result), False)
+        test_user = yield self.retrieve_user(self.non_existent_user_email)
+        new_user_data = {"_id": "test@test.com", "name": "new_test_name"}
+        user = yield self.update_user(test_user, new_user_data)
+        self.assertIsNone(user)
 
     def tearDown(self):
-        self.destroy_test_user("test@gmail.com")
+        yield self.destroy_test_user()
 
-    def create_test_user(self, email, name):
-        database = self.settings["database"]
-        database.users.insert_one({ "_id" : email, "name" : name })
+    @coroutine
+    def create_test_user(self):
+        user = User(_id="test@test.com", name="test")
+        user.save()
+        return user
 
-    def destroy_test_user(self, email):
-        database = self.settings["database"]
-        database.users.delete_one({ "_id" : email})
+    @coroutine
+    def destroy_test_user(self):
+        user = yield self.retrieve_user_with_id(self.valid_test_email)
+        user.delete()
 
-    def retrieve_user(self, name):
-        test_user = retrieve_user_with_email_id(self, name)
-        return test_user
+    @coroutine
+    def retrieve_user(self, user_email):
+        query = User.objects(_id=user_email)
+        return query.first()
+
+    @coroutine
+    def update_user(self, user, user_data):
+        if user == None:
+            return None
+
+        try:
+            for k,v in user_data.items():
+                user[k] = v
+        except:
+            return None
+
+        try:
+            user.save()
+        except:
+            return None
+
+        return user
 
 if __name__ == "__main__":
     unittest.main()

@@ -4,6 +4,7 @@ from tornado.auth import GoogleOAuth2Mixin
 from tornado.web import authenticated
 from tornado.escape import json_encode
 
+from models.User import *
 
 # User authentication data:
 # "users" collection schema: name, email
@@ -21,10 +22,11 @@ class AuthLoginHandler(BaseHandler, GoogleOAuth2Mixin):
                 access_token=access["access_token"])
             self.set_secure_cookie("user", json_encode(user))
 
-            database = self.settings["database"]
-            if not database.users.find_one({ "_id" : user["email"] }):
-                database.users.insert_one({ "_id" : user["email"],
-                                            "name" : user["name"] })
+            user_model = yield self.retrieve_user_with_email_id(user["email"])
+            if not user_model:
+                user = User(_id=user["email"],
+                            name=user["name"])
+                user.save()
 
             self.redirect("/main")
         else:

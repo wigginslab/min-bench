@@ -9,6 +9,7 @@ import settings
 ## Import Mongodb packages
 from pymongo import MongoClient
 import socket
+from mongoengine import *
 
 ## Import Tornado packages
 from tornado.escape import json_encode, json_decode, url_escape
@@ -31,6 +32,7 @@ from routes.UserHandler import UserHandler
 if __name__ == "__main__":
     client = MongoClient()
     database = client.min_bench
+    connect("min-bench")
 
     settings_dict = {
         "static_path" : settings.STATIC_PATH,
@@ -50,10 +52,10 @@ if __name__ == "__main__":
         (r"/auth/logout/?", AuthLogoutHandler),
         (r"/learn/?", LearnMoreHandler),
         (r"/main/?", OnboardingHandler),
-        (r"/user/?", UserHandler),
+        (r"/edit/?", UserHandler),
         (r"/websitecreator/?", WebsiteCreatorHandler),
         (r"/websiteeditor/?", WebsiteEditorHandler)
     ], **settings_dict)
 
     application.listen(settings.PORT)
-    tornado.ioloop.IOLoop.instance().start()
+    io_loop = tornado.ioloop.IOLoop.instance().start()
