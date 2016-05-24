@@ -27,6 +27,7 @@ from routes.WebsiteCreatorHandler import WebsiteCreatorHandler
 from routes.WebsiteEditorHandler import WebsiteEditorHandler
 from routes.AuthHandler import AuthLoginHandler, AuthLogoutHandler
 from routes.UserHandler import UserHandler
+from routes.TrafficHandler import TrafficHandler
 
 ## Main Configs
 if __name__ == "__main__":
@@ -51,6 +52,7 @@ if __name__ == "__main__":
         (r"/auth/login/?", AuthLoginHandler),
         (r"/auth/logout/?", AuthLogoutHandler),
         (r"/learn/?", LearnMoreHandler),
+        (r"/traffic/?", TrafficHandler),
         (r"/main/?", OnboardingHandler),
         (r"/edit/?", UserHandler),
         (r"/websitecreator/?", WebsiteCreatorHandler),

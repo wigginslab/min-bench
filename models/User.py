@@ -8,3 +8,4 @@ class User(Document):
     start_up_description = StringField()
     start_up_tags = StringField()
     onboarding_complete = BooleanField(default=False)
+    access_token = StringField()
