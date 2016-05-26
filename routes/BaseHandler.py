@@ -5,6 +5,7 @@ from tornado.gen import coroutine, Return
 from tornado.web import RequestHandler, Application, authenticated
 
 from models.User import *
+from utils.UserHelper import retrieve_user_with_email_id
 
 class BaseHandler(RequestHandler):
     def get_current_user(self):
@@ -18,10 +19,5 @@ class BaseHandler(RequestHandler):
     @coroutine
     def current_user_completed_onboarding(self):
         user_email = self.current_user['email']
-        user = yield self.retrieve_user_with_email_id(user_email)
+        user = yield retrieve_user_with_email_id(user_email)
         raise Return(user.onboarding_complete)
-
-    @coroutine
-    def retrieve_user_with_email_id(self, user_email):
-        query = User.objects(_id=user_email)
-        return query.first()
