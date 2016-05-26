@@ -19,10 +19,5 @@ class WebsiteCreatorHandler(BaseHandler):
                                        "company_name" : company_name,
                                        "template_type" : website_template_type })
 
-        # caching
-        self.settings["messages"].append(
-            "Modified wesite '{0}'".format(company_name)
-        )
-
         # TODO: redirect to already created website
         self.redirect("/websiteeditor")

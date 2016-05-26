@@ -1,5 +1,7 @@
 # Min-Bench
 
+![travis build status](https://travis-ci.com/wigginslab/min-bench.svg?token=sJyWwcVqmgjZ6SuF12eq&branch=master)
+
 An experimental minimalistic Lean Workbench. This product is specifically designed to help
 NYCRIN I-Corps teams before and after the 6-week intensive I-Corps program.
 

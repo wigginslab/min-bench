@@ -43,8 +43,7 @@ if __name__ == "__main__":
         "cookie_secret": settings.COOKIE_SECRET,
         "google_oauth" : { "key" : settings.GAUTH_CLIENT_ID,
                            "secret" : settings.GAUTH_CLIENT_SECRET },
-        "database" : database,
-        "messages" : []
+        "database" : database
     }
 
     application = Application([
