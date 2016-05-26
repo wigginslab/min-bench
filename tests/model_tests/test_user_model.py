@@ -17,8 +17,8 @@ class TestUserModel(AsyncTestCase):
         self.io_loop.make_current()
         connect("min-bench")
 
-        self.valid_test_email="test@test.com"
-        self.invalid_test_email="not_a_valid_test_email@test.com"
+        self.valid_test_email = "test@test.com"
+        self.invalid_test_email = "not_a_valid_test_email@test.com"
 
     # Tests
     @gen_test
