@@ -25,7 +25,8 @@ class AuthLoginHandler(BaseHandler, GoogleOAuth2Mixin):
             user_model = yield self.retrieve_user_with_email_id(user["email"])
             if not user_model:
                 user = User(_id=user["email"],
-                            name=user["name"])
+                            name=user["name"],
+                            access_token=access["access_token"])
                 user.save()
 
             self.redirect("/main")
@@ -33,7 +34,7 @@ class AuthLoginHandler(BaseHandler, GoogleOAuth2Mixin):
             yield self.authorize_redirect(
                 redirect_uri=redirect_uri,
                 client_id=self.settings["google_oauth"]["key"],
-                scope=['profile', 'email'],
+                scope=['profile', 'email', 'https://www.googleapis.com/auth/analytics', 'https://www.googleapis.com/auth/analytics.edit', 'https://www.googleapis.com/auth/analytics.readonly'],
                 response_type='code',
                 extra_params={'approval_prompt': 'auto'})
 
