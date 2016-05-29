@@ -149,7 +149,7 @@ gapi.analytics.ready(function() {
       '  <div class="DateRangeSelector-item">' +
       '    <label>End Date</label> ' +
       '    <input type="date">' +
-      '  </div>' +
+      '  </div><br>' +
       '  <button>Weekly</button>' +
       '  <button>Monthly</button>' +
       '</div>'

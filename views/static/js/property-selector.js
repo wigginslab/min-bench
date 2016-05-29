@@ -70,7 +70,7 @@ gapi.analytics.ready(function() {
      * override this by passing it to the component constructor.
      */
     template:
-      '<select></select>'
+      '<label>Website</label> <select></select>'
   });
 
 });
