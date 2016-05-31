@@ -5,6 +5,7 @@ from tornado.gen import coroutine
 from routes.BaseHandler import BaseHandler
 from models.User import *
 from models.UserForm import *
+from utils.UserHelper import update_user
 
 class UserHandler(BaseHandler):
     @authenticated
@@ -60,26 +61,6 @@ class UserHandler(BaseHandler):
             return {}
 
         return new_dic
-
-    @coroutine
-    def update_user(self, user, user_data):
-        if user == None:
-            return None
-
-        try:
-            for k,v in user_data.items():
-                user[k] = v
-        except:
-            return None
-
-        user['onboarding_complete'] = True
-
-        try:
-            user.save()
-        except:
-            return None
-
-        return user
 
     def return_error_message(self, status_code, message):
         self.set_status(status_code)

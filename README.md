@@ -13,14 +13,19 @@ products/research.
 
 Setup
 -----
-1. Make sure you have a MongoDB server running. For example, to start a standalone
+
+1. `git clone --recursive git@github.com:wigginslab/min-bench.git`
+
+> It's import to clone recursively as we now have git sub-modules
+
+2. Make sure you have a MongoDB server running. For example, to start a standalone
    MongoDB server, use `mongod --dbpath <database path>`. if you want to use the default path, first `mkdir -p /data/db`, set permissions, then `mongod`.
 
-2. Next, install python requirements via `pip install -r requirements.txt`.
+3. Next, install python requirements via `pip install -r requirements.txt`.
 
-3. Run the tornado server via `python app.py`
+4. Run the tornado server via `python app.py`
 
-4. open http://localhost:3036/
+5. open http://localhost:3036/
 
 Todos
 -----
