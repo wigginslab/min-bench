@@ -15,7 +15,7 @@ class TestUserHandler(AsyncTestCase):
         super(AsyncTestCase, self).setUp()
         self.io_loop = self.get_new_ioloop()
         self.io_loop.make_current()
-        connect("min-bench")
+        connect("min_bench")
 
         self.valid_user_email = "test@test.com"
         self.non_existent_user_email = "not_a_user@gmail.com"
