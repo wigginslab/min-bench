@@ -5,6 +5,7 @@ from tornado.web import authenticated
 from tornado.escape import json_encode
 
 from models.User import *
+from utils.UserHelper import retrieve_user_with_email_id
 
 # User authentication data:
 # "users" collection schema: name, email
@@ -22,7 +23,7 @@ class AuthLoginHandler(BaseHandler, GoogleOAuth2Mixin):
                 access_token=access["access_token"])
             self.set_secure_cookie("user", json_encode(user))
 
-            user_model = yield self.retrieve_user_with_email_id(user["email"])
+            user_model = yield retrieve_user_with_email_id(user["email"])
             if not user_model:
                 user = User(_id=user["email"],
                             name=user["name"])
