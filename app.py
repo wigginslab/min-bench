@@ -32,7 +32,7 @@ from routes.UserHandler import UserHandler
 if __name__ == "__main__":
     client = MongoClient()
     database = client.min_bench
-    connect("min-bench")
+    connect("min_bench")
 
     settings_dict = {
         "static_path" : settings.STATIC_PATH,
