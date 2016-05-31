@@ -27,6 +27,7 @@ from routes.WebsiteCreatorHandler import WebsiteCreatorHandler
 from routes.WebsiteEditorHandler import WebsiteEditorHandler
 from routes.AuthHandler import AuthLoginHandler, AuthLogoutHandler
 from routes.UserHandler import UserHandler
+from routes.APIHandler import AngelCallBackHandler
 
 ## Main Configs
 if __name__ == "__main__":
@@ -53,7 +54,8 @@ if __name__ == "__main__":
         (r"/main/?", OnboardingHandler),
         (r"/edit/?", UserHandler),
         (r"/websitecreator/?", WebsiteCreatorHandler),
-        (r"/websiteeditor/?", WebsiteEditorHandler)
+        (r"/websiteeditor/?", WebsiteEditorHandler),
+        (r"/angelcallback", AngelCallBackHandler),
     ], **settings_dict)
 
     application.listen(settings.PORT)
