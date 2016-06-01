@@ -5,7 +5,7 @@ from tornado.gen import coroutine
 from routes.BaseHandler import BaseHandler
 from models.User import *
 from models.UserForm import *
-from utils.UserHelper import update_user
+from utils.UserHelper import update_user, retrieve_user_with_email_id
 
 class UserHandler(BaseHandler):
     @authenticated
@@ -13,7 +13,7 @@ class UserHandler(BaseHandler):
     def get(self):
         current_user = self.get_current_user()
         user_id = current_user['email']
-        user = yield self.retrieve_user_with_email_id(user_id)
+        user = yield retrieve_user_with_email_id(user_id)
 
         self.render("accountsetup.html", title="Edit Account Information", user=user)
 
@@ -30,13 +30,13 @@ class UserHandler(BaseHandler):
 
         current_user = self.get_current_user()
         user_id = current_user['email']
-        user = yield self.retrieve_user_with_email_id(user_id)
+        user = yield retrieve_user_with_email_id(user_id)
 
         if user is None:
             self.return_error_message(404, "Error: Could not find user with email {0}".format(user_id))
             return
 
-        updated_user = yield self.update_user(user, form_data)
+        updated_user = yield update_user(user, form_data)
 
         if updated_user is None:
             self.return_error_message(500, "Error: Update for user with email {0} failed ".format(user_id))
