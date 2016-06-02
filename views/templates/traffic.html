@@ -5,7 +5,10 @@
 
 <div id="embed-api-auth-container"></div>
 <div id="chart-container"></div>
-<div id="view-selector-container"></div>
+<div id="property-selector-container"></div><br>
+
+<!-- Date range experiment -->
+<div id="date-range-selector-container"></div>
 
 <!-- google api -->
 <script>
@@ -16,6 +19,10 @@
   fs.parentNode.insertBefore(js,fs);js.onload=function(){g.load('analytics');};
 }(window,document,'script'));
 </script>
+
+<!-- make sure to do this after defining gapi -->
+<script src="/static/js/date-range-selector.js"></script>
+<script src="/static/js/property-selector.js"></script>
 
 <script>
 
@@ -32,20 +39,24 @@ gapi.analytics.ready(function() {
     }
   });
 
-    console.log('{{ access_token }}')
+  console.log('{{ access_token }}')
 
+  // DateRangeSelector
+  var dateRange = {
+    'start-date': '30daysAgo',
+    'end-date': 'yesterday'
+  };
 
-  /**
-   * Create a new ViewSelector instance to be rendered inside of an
-   * element with the id "view  -selector-container".
-   */
-  var viewSelector = new gapi.analytics.ViewSelector({
-    container: 'view-selector-container'
-  });
+  var dateRangeSelector = new gapi.analytics.ext.DateRangeSelector({
+    container: 'date-range-selector-container'
+  })
+  .set(dateRange)
+  .execute();
 
-  // Render the view selector to the page.
-  viewSelector.execute();
-
+  var propertySelector = new gapi.analytics.ext.PropertySelector({
+    container: 'property-selector-container'
+  })
+  .execute();
 
   /**
    * Create a new DataChart instance with the given query parameters
@@ -54,10 +65,13 @@ gapi.analytics.ready(function() {
    */
   var dataChart = new gapi.analytics.googleCharts.DataChart({
     query: {
-      metrics: 'ga:sessions',
+      metrics: 'ga:pageviews,' +
+               'ga:contentGroupUniqueViews1,' +
+               'ga:contentGroupUniqueViews2,' +
+               'ga:contentGroupUniqueViews3,' +
+               'ga:contentGroupUniqueViews4,' +
+               'ga:contentGroupUniqueViews5',
       dimensions: 'ga:date',
-      'start-date': '30daysAgo',
-      'end-date': 'yesterday'
     },
     chart: {
       container: 'chart-container',
@@ -66,14 +80,19 @@ gapi.analytics.ready(function() {
         width: '100%'
       }
     }
-  });
-
+  })
+  .set({query:dateRange});
 
   /**
    * Render the dataChart on the page whenever a new view is selected.
    */
-  viewSelector.on('change', function(ids) {
-    dataChart.set({query: {ids: ids}}).execute();
+
+  dateRangeSelector.on('change', function(data) {
+    dataChart.set({query: data}).execute();
+  });
+
+  propertySelector.on('change', function(id) {
+    dataChart.set({query: {ids: [id]}}).execute();
   });
 
 });
