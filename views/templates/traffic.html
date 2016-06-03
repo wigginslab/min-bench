@@ -21,8 +21,8 @@
 </script>
 
 <!-- make sure to do this after defining gapi -->
-<script src="/static/js/date-range-selector.js"></script>
-<script src="/static/js/property-selector.js"></script>
+<script src="../static/js/date-range-selector.js"></script>
+<script src="../static/js/property-selector.js"></script>
 
 <script>
 
@@ -35,7 +35,7 @@ gapi.analytics.ready(function() {
    */
   gapi.analytics.auth.authorize({
       'serverAuth': {
-      'access_token': '{{ access_token }}'
+      'access_token': '{{access_token}}'
     }
   });
 

@@ -3,6 +3,7 @@ from routes.TrafficHandler import *
 from tornado.gen import coroutine
 from tornado.testing import *
 from mongoengine import *
+from settings import PORT
 
 
 class TrafficFetchTest(AsyncTestCase):
@@ -19,14 +20,14 @@ class TrafficFetchTest(AsyncTestCase):
     @gen_test
     def test_http_fetch(self):
         client = AsyncHTTPClient(self.io_loop)
-        response = yield client.fetch("http://localhost:3036/traffic", self.handle_request)
+        response = yield client.fetch("http://localhost:{}/traffic".format(str(PORT)), self.handle_request)
         # Test contents of response
         self.assertIn("DateRangeSelector", response.body)
 
     @gen_test
     def test_http_fetch_1(self):
         client = AsyncHTTPClient(self.io_loop)
-        response = yield client.fetch("http://localhost:3036/traffic", self.handle_request)
+        response = yield client.fetch("http://localhost:{}/traffic".format(str(PORT)), self.handle_request)
         # Test contents of response
         self.assertIn("propertySelector", response.body)
 
