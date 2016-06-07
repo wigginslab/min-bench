@@ -1,5 +1,64 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1> display results here </h2>
+<div class="vc-matcher-header">
+  <div class="container">
+    <div class="container center-block">
+    &nbsp;
+    <h2 style="font-size: 55px;">{{title}}</h2>
+    &nbsp;
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="input-group input-group-lg">
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Investor <span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </div>
+            <input type="text" class="form-control" aria-label="..." placeholder="search">
+          </div>
+        </div>
+      </div>
+      &nbsp;
+      <div>
+        {% for tag in tags %}
+          <p style="font-size: 15px;">Search Criteria based on your start up tags. To edit them click <a href="/edit">here</a></p>
+          <button type="button" class="btn btn-default" style="background-color: #e7e9ec;background-image: none;font-size: 11px;">{{tag}}</button>
+        {% end %}
+      </div>
+    </div>
+    &nbsp;
+  </div>
+</div>
+<div class="investors">
+  <div class="container">
+    <div class="row">
+      {% for investor in investors %}
+        {% for inv in investor %}
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail" style="min-height: 500px;max-height: 500px; overflow-y: auto; box-shadow: 0px 3px 5px rgba(0,0,0,0.45)">
+              <img src="{{inv[u'image']}}" style="margin-top:30px; border-radius: 2.5px; box-shadow: 0px 3px 5px rgba(0,0,0,0.45);"></p>
+              <div class="caption" style="font-size: 16px;">
+                <h3>{{inv[u'name']}}</h3>
+                <P>{{inv[u'bio']}}</p>
+                <p>{{inv[u'what_i_do']}}</p>
+                &nbsp;
+                <p>
+                  <a href="#" class="btn btn-primary" role="button">linkedIn</a>
+                  &nbsp;
+                  <a href="#" class="btn btn-default" role="button">Email</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        {% end %}
+      {% end %}
+    </div>
+  </div>
+</div>
 {% end %}
