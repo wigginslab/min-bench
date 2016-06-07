@@ -27,7 +27,6 @@ from routes.WebsiteCreatorHandler import WebsiteCreatorHandler
 from routes.WebsiteEditorHandler import WebsiteEditorHandler
 from routes.AuthHandler import AuthLoginHandler, AuthLogoutHandler
 from routes.UserHandler import UserHandler
-from routes.APIHandler import AngelCallBackHandler
 from routes.VCMatcherHandler import VCMatcherHandler
 
 ## Main Configs
