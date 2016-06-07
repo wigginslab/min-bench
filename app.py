@@ -56,7 +56,6 @@ if __name__ == "__main__":
         (r"/vc-matcher", VCMatcherHandler),
         (r"/websitecreator/?", WebsiteCreatorHandler),
         (r"/websiteeditor/?", WebsiteEditorHandler),
-        (r"/angelcallback", AngelCallBackHandler),
     ], **settings_dict)
 
     application.listen(settings.PORT)
