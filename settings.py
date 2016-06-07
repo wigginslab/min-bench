@@ -17,6 +17,3 @@ logging.basicConfig(level=logging.DEBUG,
 console = logging.StreamHandler(sys.stderr)
 
 COOKIE_SECRET = "a6Ca7pnQQfaNUeES9RjAzBEBlDbznEsamds7rHFy0Ng="
-
-ANGEL_LIST_ID = "877b8e7f89b67117030725c93f7787eb2e2d240222916ae1"
-ANGEL_LIST_SECRET = "fac08c4a43771aa1a8b57969c32d6a8bbb4b380cccf09562"

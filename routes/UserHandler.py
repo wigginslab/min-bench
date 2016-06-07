@@ -44,7 +44,6 @@ class UserHandler(BaseHandler):
 
         self.set_status(200)
 
-    # TODO move these to Utility sub package
     def sanitize_request_form_data(self, form_data):
         if form_data is None:
             return {}
