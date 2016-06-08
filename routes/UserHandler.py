@@ -36,6 +36,7 @@ class UserHandler(BaseHandler):
             self.return_error_message(404, "Error: Could not find user with email {0}".format(user_id))
             return
 
+        ## TODO See if you can catch exceptions here
         updated_user = yield update_user(user, form_data)
 
         if updated_user is None:
