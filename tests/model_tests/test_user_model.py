@@ -45,7 +45,7 @@ class TestUserModel(AsyncTestCase):
     ## TODO move this into base parent class
     @coroutine
     def create_test_user(self):
-        user = User(_id=self.valid_test_email, name="test")
+        user = User(_id=self.valid_test_email, name="test", start_up_tags="education, business")
         user.save()
         return user
 
