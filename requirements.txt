@@ -4,3 +4,4 @@ pymongo==3.1
 mongoengine==0.10.6
 google-api-python-client==1.4
 unittest2
+requests
