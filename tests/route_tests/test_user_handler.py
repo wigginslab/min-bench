@@ -57,7 +57,7 @@ class TestUserHandler(AsyncTestCase):
 
     @coroutine
     def create_test_user(self):
-        user = User(_id="test@test.com", name="test")
+        user = User(_id="test@test.com", name="test", start_up_tags="education, business")
         user.save()
         return user
 

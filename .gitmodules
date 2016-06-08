@@ -1,0 +1,3 @@
+[submodule "modules/vc_matcher_mb"]
+	path = modules/vc_matcher_mb
+	url = git@github.com:wigginslab/vc-matcher-mb.git
