@@ -45,8 +45,10 @@
               <img src="{{inv[u'image']}}" style="margin-top:30px; border-radius: 2.5px; box-shadow: 0px 3px 5px rgba(0,0,0,0.45);"></p>
               <div class="caption" style="font-size: 16px;">
                 <h3>{{inv[u'name']}}</h3>
-                <P>{{inv[u'bio']}}</p>
-                <p>{{inv[u'what_i_do']}}</p>
+                <p>{{inv[u'bio']}}</p>
+                {% if inv[u'what_i_do'] is not None %}
+                  <p>{{inv[u'what_i_do']}}</p>
+                {% end %}
                 &nbsp;
                 <p>
                   <a href="#" class="btn btn-primary" role="button">linkedIn</a>
