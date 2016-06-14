@@ -1,3 +1,6 @@
 [submodule "modules/vc_matcher_mb"]
 	path = modules/vc_matcher_mb
 	url = git@github.com:wigginslab/vc-matcher-mb.git
+[submodule "min-bench-fe"]
+	path = min-bench-fe
+	url = gitt@github.com:wigginslab/min-bench-fe.git 
