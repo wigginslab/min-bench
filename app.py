@@ -25,7 +25,7 @@ from routes.OnboardingHandler import OnboardingHandler
 from routes.LearnMoreHandler import LearnMoreHandler
 from routes.WebsiteCreatorHandler import WebsiteCreatorHandler
 from routes.WebsiteEditorHandler import WebsiteEditorHandler
-from routes.AuthHandler import AuthLoginHandler, AuthLogoutHandler
+from routes.AuthHandler import AuthLoginHandler, AuthLogoutHandler, SessionHandler
 from routes.UserHandler import UserHandler
 from routes.VCMatcherHandler import VCMatcherHandler
 
@@ -50,6 +50,7 @@ if __name__ == "__main__":
         (r"/", IndexHandler),
         (r"/auth/login/?", AuthLoginHandler),
         (r"/auth/logout/?", AuthLogoutHandler),
+        (r"/auth/session/?", SessionHandler),
         (r"/learn/?", LearnMoreHandler),
         (r"/main/?", OnboardingHandler),
         (r"/edit/?", UserHandler),
