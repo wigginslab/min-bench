@@ -1,5 +1,9 @@
 *~
 *.pyc
 venv
+.DS_Store
+public/static/bundle.js
+public/static/vendor.bundle.js
+public/static/index.html
 
 modules

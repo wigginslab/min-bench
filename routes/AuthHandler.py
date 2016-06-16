@@ -29,7 +29,7 @@ class AuthLoginHandler(BaseHandler, GoogleOAuth2Mixin):
                             name=user["name"])
                 user.save()
 
-            self.redirect("/main")
+            self.redirect("/")
         else:
             yield self.authorize_redirect(
                 redirect_uri=redirect_uri,
@@ -43,3 +43,13 @@ class AuthLogoutHandler(BaseHandler):
     def get(self):
         self.clear_cookie("user")
         self.redirect(self.get_argument("next", "/"))
+
+class SessionHandler(BaseHandler):
+    @authenticated
+    @coroutine
+    def get(self):
+        current_user = self.get_current_user()
+        user_id = current_user['email']
+        user = yield retrieve_user_with_email_id(user_id)
+        self.content_type = 'application/json'
+        self.write(user.to_json())
