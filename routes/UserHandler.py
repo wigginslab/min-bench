@@ -1,3 +1,5 @@
+import json
+
 from tornado.web import authenticated
 from tornado.escape import json_decode
 from tornado.gen import coroutine
@@ -20,7 +22,8 @@ class UserHandler(BaseHandler):
     @authenticated
     @coroutine
     def post(self):
-        form_data = self.sanitize_request_form_data(self.request.arguments)
+        req_data = json.loads(self.request.body)
+        form_data = self.sanitize_request_form_data(req_data)
         form = UserForm(data=form_data)
         form_data_is_valid = form.validate()
 
@@ -56,10 +59,10 @@ class UserHandler(BaseHandler):
         new_dic = {}
         try:
             for k,v in dic.items():
-                new_dic[k] = v[0]
+                new_dic[k] = v
         except:
             return {}
-
+            
         return new_dic
 
     def return_error_message(self, status_code, message):
