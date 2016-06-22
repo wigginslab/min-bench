@@ -19,7 +19,6 @@ class User(Document):
 
         for tag_name in tag_names:
             tag_name = tag_name.strip()
-            tag_name = tag_name.strip()
             tag = Tag.objects(name=tag_name)
             if len(tag) == 0:
                 tags_to_look_up.append(tag_name)
