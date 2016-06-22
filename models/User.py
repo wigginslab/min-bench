@@ -14,9 +14,7 @@ class User(Document):
     @coroutine
     def clean(self):
         start_up_tags = self.start_up_tags
-        print(start_up_tags)
         tag_names = self.start_up_tags.split(",")
-        print(tag_names)
         tags_to_look_up = []
 
         for tag_name in tag_names:
@@ -28,7 +26,6 @@ class User(Document):
 
         try:
             for tag_name in tags_to_look_up:
-                print("tag_name")
                 fetch_tag_data_from_angel_list(tag_name);
         except ValueError as err:
             raise ValidationError(err)
