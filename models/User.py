@@ -8,8 +8,8 @@ class User(Document):
     name = StringField(required=True)
     start_up_name = StringField()
     start_up_description = StringField()
-    start_up_tags = StringField(required=True)
-    onboarding_complete = BooleanField(default=False)
+    start_up_tags = StringField()
+    onboarding_complete = BooleanField()
 
     @coroutine
     def clean(self):
