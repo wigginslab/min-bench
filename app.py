@@ -35,7 +35,7 @@ if __name__ == "__main__":
     db_host = os.environ.get("DB_PORT_27017_TCP_ADDR", "localhost")
     client = MongoClient(db_host, 27017)
     database = client.min_bench
-    connect("min_bench")
+    connect("min_bench", host=db_host)
 
     settings_dict = {
         "static_path" : settings.STATIC_PATH,
