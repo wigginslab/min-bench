@@ -10,6 +10,7 @@ import settings
 from pymongo import MongoClient
 import socket
 from mongoengine import *
+import os
 
 ## Import Tornado packages
 from tornado.escape import json_encode, json_decode, url_escape
@@ -25,13 +26,14 @@ from routes.OnboardingHandler import OnboardingHandler
 from routes.LearnMoreHandler import LearnMoreHandler
 from routes.WebsiteCreatorHandler import WebsiteCreatorHandler
 from routes.WebsiteEditorHandler import WebsiteEditorHandler
-from routes.AuthHandler import AuthLoginHandler, AuthLogoutHandler, SessionHandler
+from routes.AuthHandler import AuthLoginHandler, AuthLogoutHandler, SessionHandler, SurveyMonkeyLogin
 from routes.UserHandler import UserHandler
 from routes.VCMatcherHandler import VCMatcherHandler
 
 ## Main Configs
 if __name__ == "__main__":
-    client = MongoClient()
+    db_host = os.environ.get("DB_PORT_27017_TCP_ADDR", "localhost")
+    client = MongoClient(db_host, 27017)
     database = client.min_bench
     connect("min_bench")
 

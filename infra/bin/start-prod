@@ -1,0 +1,32 @@
+#! /bin/bash
+
+# Color variables
+esc_seq="\x1b["
+no_color=$esc_seq"39;49;00m"
+red_color=$esc_seq"31;01m"
+green_color=$esc_seq"32;01m"
+
+# Constants
+web_image_name="web"
+web_container_name="web"
+db_image_name="db"
+db_container_name="db"
+
+# Create an exit hook
+function on_premature_exit {
+  if [[ "$?" -ne "0" ]]; then
+    echo -e "${red_color}✗ Failed to start prod.${no_color}"
+  fi
+  cd $entry_dir
+}
+
+# Setup the exit hook
+trap 'on_premature_exit' EXIT
+
+# Exit on error
+set -e
+
+docker run -d --name "$db_container_name" -p "27017:27017" "$db_image_name"
+docker run -d --name "$web_container_name" -p "3036:3036" --link "$db_container_name" "$web_image_name"
+
+echo -e "${green_color}✓ prod started successfully!${no_color}"
