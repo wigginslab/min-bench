@@ -3,8 +3,8 @@ import os
 DEBUG = True
 DIRNAME = os.path.dirname(__file__)
 STATIC_PATH = os.path.join(DIRNAME, "public/static")
-GAUTH_CLIENT_ID = "692990912471-c60j5rf40at2j1724smps1nfcvs7s96e.apps.googleusercontent.com"
-GAUTH_CLIENT_SECRET = "nfNkd4LFas9FLPoOnQgQ6f5A"
+GAUTH_CLIENT_ID = "734018315784-0j6u2aibu0286f4md2ci5hcg67dahqdk.apps.googleusercontent.com"
+GAUTH_CLIENT_SECRET = "REbvXt9JFhUOChZCq65PJkSN"
 TEMPLATE_PATH = os.path.join(DIRNAME, "public/static")
 PORT = 3036
 
