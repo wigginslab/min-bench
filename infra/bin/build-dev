@@ -1,0 +1,48 @@
+#! /bin/bash
+
+# Color variables
+esc_seq="\x1b["
+no_color=$esc_seq"39;49;00m"
+red_color=$esc_seq"31;01m"
+green_color=$esc_seq"32;01m"
+
+# Constants
+bin_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+min_bench_dir="$( dirname $( dirname $bin_dir ) )"
+entry_dir="$PWD"
+web_image_name="web-dev"
+asset_builder_image_name="asset-builder-dev"
+db_image_name="db-dev"
+curr_image_tag="latest"
+web_dir="$min_bench_dir/infra/dev-web"
+asset_dir="$min_bench_dir/infra/dev-asset-builder"
+db_dir="$min_bench_dir/infra/db"
+
+# Create an exit hook
+function on_premature_exit {
+  if [[ "$?" -ne "0" ]]; then
+    echo -e "${red_color}✗ Failed to build dev.${no_color}"
+  fi
+  cd $entry_dir
+}
+
+# Setup the exit hook
+trap 'on_premature_exit' EXIT
+
+# Exit on error
+set -e
+
+# Build the web image first
+echo "Building '$web_image_name:$curr_image_tag' image..." \
+&& docker build --rm -t "$web_image_name:$curr_image_tag" -f "$web_dir/Dockerfile" "$min_bench_dir" \
+&& echo -e "${green_color}✓ The '$web_image_name:$curr_image_tag' image was built successfully!${no_color}"
+
+# Build the web image first
+echo "Building '$asset_builder_image_name:$curr_image_tag' image..." \
+&& docker build --rm -t "$asset_builder_image_name:$curr_image_tag" -f "$asset_dir/Dockerfile" "$min_bench_dir" \
+&& echo -e "${green_color}✓ The '$asset_builder_image_name:$curr_image_tag' image was built successfully!${no_color}"
+
+# Then build the db image
+echo "Building '$db_image_name:$curr_image_tag' image..." \
+&& docker build --rm -t "$db_image_name:$curr_image_tag" "$db_dir" \
+&& echo -e "${green_color}✓ The '$db_image_name:$curr_image_tag' image was built successfully!${no_color}"
