@@ -30,7 +30,7 @@ trap 'on_premature_exit' EXIT
 # Exit on error
 set -e
 
-docker run -d --name "$db_container_name" -p "27017:27017" "$db_image_name"
+docker run -d --name "$db_container_name" -v "mongo:/data/db" -p "27017:27017" "$db_image_name"
 docker run -d --name "$web_container_name" -v "$min_bench_dir:/usr/src/app" -p "3036:3036" --link "$db_container_name" "$web_image_name"
 docker run -d --name "$asset_builder_container_name" -v "$min_bench_dir:/usr/src/app" -p "80:80" --link "$web_container_name" "$asset_builder_image_name"
 
