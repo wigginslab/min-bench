@@ -1,0 +1,38 @@
+#! /bin/bash
+
+# Color variables
+esc_seq="\x1b["
+no_color=$esc_seq"39;49;00m"
+red_color=$esc_seq"31;01m"
+green_color=$esc_seq"32;01m"
+
+# Constants
+web_container_name="web"
+db_container_name="db"
+asset_builder_container_name="assets"
+
+# Create an exit hook
+function on_premature_exit {
+  if [[ "$?" -ne "0" ]]; then
+    echo -e "${red_color}✗ Failed to stop dev.${no_color}"
+  fi
+  cd $entry_dir
+}
+
+# Setup the exit hook
+trap 'on_premature_exit' EXIT
+
+# Exit on error
+set -e
+
+docker stop $web_container_name || :
+docker rm $web_container_name || :
+
+docker stop $asset_builder_container_name || :
+docker rm $asset_builder_container_name || :
+
+docker stop $db_container_name || :
+docker rm $db_container_name || :
+
+
+echo -e "${green_color}✓ dev stopped successfully!${no_color}"
