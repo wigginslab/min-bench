@@ -33,7 +33,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 WORKDIR /usr/src/app/min-bench-fe
 RUN npm install && \
-    npm run deploy && \
+    npm run build && \
     rm -rf node_modules && \
     rm -rf /usr/local/node && \
     rm -rf /usr/local/npm && \
