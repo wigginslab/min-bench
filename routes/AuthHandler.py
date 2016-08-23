@@ -24,9 +24,11 @@ class AuthLoginHandler(BaseHandler, GoogleOAuth2Mixin):
             self.set_secure_cookie("user", json_encode(user))
 
             user_model = yield retrieve_user_with_email_id(user["email"])
+
             if not user_model:
                 user = User(_id=user["email"],
-                            name=user["name"])
+                            name=user["name"],
+                            profile_url=user["picture"])
                 user.save()
 
             self.redirect("/")
