@@ -1,6 +1,7 @@
 # Min-Bench
 
 ![travis build status](https://travis-ci.com/wigginslab/min-bench.svg?token=sJyWwcVqmgjZ6SuF12eq&branch=master)
+<a href="https://zenhub.com"><img src="https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png"></a>
 
 An experimental minimalistic Lean Workbench. This product is specifically designed to help
 NYCRIN I-Corps teams before and after the 6-week intensive I-Corps program.
